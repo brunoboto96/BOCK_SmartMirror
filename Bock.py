@@ -67,7 +67,7 @@ class Full_Screen():
 
     def calender(self):
         print('stuff needs to go here')
-        
+
 
 
 w = Full_Screen()
