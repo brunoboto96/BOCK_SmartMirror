@@ -154,7 +154,7 @@ class News(Frame):
         headlines_url = "https://news.google.com/news?ned=gb&output=rss"
         feed = feedparser.parse(headlines_url)
 
-        for post in feed.entries[0:5]:
+        for post in feed.entries[0:1]:
             headline = NewsHeadline(self.headlinesContainer, post.title)
             headline.pack(side=TOP, anchor=W)
         self.after(60000, self.get_headlines)
@@ -164,8 +164,8 @@ class NewsHeadline(Frame):
     def __init__(self, parent, event_name=""):
         Frame.__init__(self, parent, bg='black')
 
-        image = Image.open("assets/Newspaper.png")
-        image = image.resize((25, 25), Image.ANTIALIAS)
+        image = Image.open("assets/download.jpg")
+        image = image.resize((100, 100), Image.ANTIALIAS)
         image = image.convert('RGB')
         photo = ImageTk.PhotoImage(image)
 
@@ -200,8 +200,8 @@ class FullscreenWindow:
         # self.clock = Clock(self.topFrame)
         # self.clock.pack(side=RIGHT, anchor=N, padx=100, pady=60)
         # # news
-        # self.news = News(self.bottomFrame)
-        # self.news.pack(side=LEFT, anchor=S, padx=100, pady=60)
+        self.news = News(self.bottomFrame)
+        self.news.pack(side=LEFT, anchor=S, padx=100, pady=60)
 
     def toggle_fullscreen(self, event=None):
         self.state = not self.state  # Just toggling the boolean
