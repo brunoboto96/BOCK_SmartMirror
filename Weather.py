@@ -15,12 +15,15 @@ class Weather():
             degree_sign = u'\N{DEGREE SIGN}'
             temperature = "{0},{1}".format(temp, degree_sign)
             current_weather = w.get_detailed_status()
-            print('weather')
         except Exception as e:
             logging.error(e)
             temp = 'unknown'
             current_weather = 'unknown'
             temperature = 'unknown'
 
-        dict = {'tempurature': temperature, "current_weather": current_weather, "temp_no_symbol": temp}
-        return dict
+        weather_dict = {
+            'tempurature': temperature,
+            "current_weather": current_weather,
+            "temp_no_symbol": temp
+        }
+        return weather_dict

@@ -10,12 +10,13 @@ access_key = "b125f7b5d89ab88807d503d6971fac6b"
 url = "http://api.ipstack.com/check?"
 
 class Location():
+
     def get_location(self):
         try:
             r = requests.get(
                 url=url,
                 params={
-                "access_key": access_key
+                "access_key": 'access_key'
                 }
             )
 
@@ -31,32 +32,34 @@ class Location():
                 country_code = result['country_code']
                 public_ip = result['ip']
                 # print(result)             #Uncomment this is you want to see other parameters you can pull
-                return [latitude, longitude]
+                location_dict = {
+                    'latitude': latitude,
+                    'longitude': longitude,
+                    'city': location,
+                    'country': country,
+                    'country_code': country_code,
+                    'public_ip': public_ip
+                }
+
+                return location_dict
         except Exception as e:
             logging.error(e)
             return None
 
-    def location(self):
-        lat_long = Location().get_location()
-        if lat_long == None:  # if no location is found, it'll access the last location stored, if no location has ever been found it'll return None
+    def geo_location(self):
+        raw_data = Location().get_location()
+        if raw_data == None:  # if no location is found, it'll access the last location stored, if no location has ever been found it'll return None
             if os.path.isfile('lat_long_saved.txt'):
                 file = eval(open('lat_long_saved.txt', 'r').read())
-                print(file)
                 lat_long = [file['latitude'], file['longitude']]
-                print(lat_long)
+                #print(lat_long)
             else:
                 lat_long = [None, None]
         else:
-            latitude_longitude = '{0},{1}'.format(lat_long[0], lat_long[1])
-            data = {'latitude': lat_long[0], 'longitude': lat_long[1]}
-            print(data)
+            lat_long = [raw_data['latitude'], raw_data['longitude']]
+            latitude_longitude = {'latitude': lat_long[0], 'longitude': lat_long[1]}
+            #print(latitude_longitude)
             with open("lat_long_saved.txt", "w") as f:
-                f.write(str(data))
+                f.write(str(latitude_longitude))
 
         return lat_long
-
-
-L = Location()
-location = L.get_location()
-
-print(location)
