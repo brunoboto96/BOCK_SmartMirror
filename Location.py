@@ -16,7 +16,7 @@ class Location():
             r = requests.get(
                 url=url,
                 params={
-                "access_key": 'access_key'
+                "access_key": access_key
                 }
             )
 
