@@ -37,15 +37,15 @@ class Clock_frame(Frame):
         #setting time label
         self.time_previous = ''
         self.time_Lbl = Label(self, font=('Helvetica', large_text_size), fg=textcolour, bg=background)
-        self.time_Lbl.pack(side=TOP, anchor=E)
+        self.time_Lbl.pack(side=TOP, anchor=NE)
         #setting day of the week label
         self.day_of_week_previous = ''
         self.day_of_week_Lbl = Label(self, text=self.day_of_week_previous, font=('Helvetica', small_text_size), fg=textcolour, bg=background)
-        self.day_of_week_Lbl.pack(side=TOP, anchor=E)
+        self.day_of_week_Lbl.pack(side=TOP, anchor=NE)
         #setting date label
         self.date_previous = ''
         self.date_Lbl = Label(self, text=self.date_previous, font=('Helvetica', small_text_size), fg=textcolour, bg=background)
-        self.date_Lbl.pack(side=TOP, anchor=E)
+        self.date_Lbl.pack(side=TOP, anchor=NE)
         self.push_time()
 
     def push_time(self):
@@ -75,13 +75,13 @@ class Weather_frame(Frame):
         print("init")
 
         self.temperatureLbl = Label(self, font=('Helvetica', large_text_size), fg=textcolour, bg=background)
-        self.temperatureLbl.pack(side=TOP, anchor=E)
+        self.temperatureLbl.pack(side=TOP, anchor=NE)
 
         #self.iconLbl = Label(self, bg=background)
         #self.iconLbl.pack(side=TOP, anchor=E, padx=50)
 
         self.currentlyLbl = Label(self, font=('Helvetica', medium_text_size), fg=textcolour, bg=background)
-        self.currentlyLbl.pack(side=TOP, anchor=E)
+        self.currentlyLbl.pack(side=TOP, anchor=NE)
         self.push_weather()
 
     def push_weather(self):
@@ -108,8 +108,8 @@ class Greeting_Frame(Frame):
         Frame.__init__(self, parent, bg=background)
         #text label
         self.greetingLbl = Label(self, font=('Helvetica', large_text_size), fg=textcolour, bg=background)
-        self.greetingLbl.pack(side=TOP)
-        self.greetingLbl.config(text='Greetings, human')
+        self.greetingLbl.pack(side=TOP, anchor=N)
+        self.greetingLbl.config(text='Greetings, you sexy beast')
 
 class Picture_Frame(Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -131,14 +131,35 @@ class Full_Screen():
         self.tk = Tk()
         self.tk.configure(background=background) # set the back ground to black, this is needed for the reflection to work properly
         self.state = False
+        cols = 3
+        rows = 3
+        for row in range(rows):
+            for col in range(cols):
+                self.tk.rowconfigure(row, weight=1)
+                self.tk.columnconfigure(col, weight=1)
+                print('{0},{1}'.format(row, col))
 
         # set up the frames
-        self.topFrame = Frame(self.tk, background=background)
-        self.bottomFrame = Frame(self.tk, background=background)
+        self.top_middle_Frame = Frame(self.tk, background=background)
+        self.top_left_Frame = Frame(self.tk, background=background)
+        self.top_right_Frame = Frame(self.tk, background=background)
+        self.middle_middle_Frame = Frame(self.tk, background=background)
+        self.middle_left_Frame = Frame(self.tk, background=background)
+        self.middle_right_Frame = Frame(self.tk, background=background)
+        self.bottom_middle_Frame = Frame(self.tk, background=background)
+        self.bottom_left_Frame = Frame(self.tk, background=background)
+        self.bottom_right_Frame = Frame(self.tk, background=background)
         #self.topFrame.pack(side=TOP, fill=BOTH, expand=YES)
         #self.bottomFrame.pack(side=BOTTOM, fill=BOTH, expand=YES)
-        self.topFrame.grid(row=0,column=0,sticky="ew")
-        self.bottomFrame.grid(row=3,column=0,sticky="nsew")
+        self.top_middle_Frame.grid(row=0,column=1,sticky="new")
+        self.top_left_Frame.grid(row=0, column=0, sticky="nw")
+        self.top_right_Frame.grid(row=0, column=2, sticky="ne")
+        self.middle_middle_Frame.grid(row=1, column=1, sticky="nsew")
+        self.middle_left_Frame.grid(row=1, column=0, sticky="nsw")
+        self.middle_right_Frame.grid(row=1, column=2, sticky="nse")
+        self.bottom_middle_Frame.grid(row=2, column=1, sticky="sew")
+        self.bottom_left_Frame.grid(row=2, column=0, sticky="sw")
+        self.bottom_right_Frame.grid(row=2, column=2, sticky="se")
 
 
         # fullscreen
@@ -146,20 +167,18 @@ class Full_Screen():
         self.tk.bind("<Control-f>", self.toggle_fullscreen)  # ctrl+f to toggle fullscreen
         self.tk.bind("<Escape>", self.end_fullscreen)
 
-        self.greetings_frame = Greeting_Frame(self.topFrame)
-        self.greetings_frame.grid(row=0, column=1, sticky="nsew")
+        self.greetings_frame = Greeting_Frame(self.top_middle_Frame)
+        self.greetings_frame.grid(row=0, column=1, sticky="n")
 
-        self.picture_frame = Picture_Frame(self.topFrame)
+        self.picture_frame = Picture_Frame(self.top_left_Frame)
         self.picture_frame.grid(row=0,column=0,sticky="nsew")
 
         # clock
-        self.clock_frame = Clock_frame(self.topFrame)
-        #self.clock_frame.pack(side=RIGHT, anchor=NE, padx=50, pady=50)
-        self.clock_frame.grid(row=0, column=2, sticky="e")
+        self.clock_frame = Clock_frame(self.top_right_Frame)
+        self.clock_frame.grid(row=0, column=2, sticky="ne")
         # weather
-        self.weather_frame = Weather_frame(self.topFrame)
-        #self.weather_frame.pack(side=RIGHT, anchor=E, padx=50, pady=50)
-        self.weather_frame.grid(row=1, column=2, sticky="e")
+        self.weather_frame = Weather_frame(self.top_right_Frame)
+        self.weather_frame.grid(row=1, column=2, sticky="ne")
 
 
 
