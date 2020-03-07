@@ -1,2 +1,7 @@
+feedparser==5.2.1
+google_auth_oauthlib==0.4.1
 pyowm==2.10.0
 requests==2.21.0
+google_api_python_client==1.7.11
+Pillow==7.0.0
+protobuf==3.11.3
