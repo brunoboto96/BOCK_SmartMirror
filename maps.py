@@ -12,7 +12,7 @@ from tkinter import Label
 import io
 
 #get your api key @ google console -> APIS & Services -> credentials | after -> dashboard enable apis -> Directions, Geocoding, Maps Static API
-apikey = 'YOUR_API_KEY'
+apikey = 'AIzaSyBaXkFfH7YY0maH4Lb2-azSXbIAR4d2McM'
 gmaps = googlemaps.Client(key=apikey)
 
 # Geocoding an address
@@ -38,12 +38,23 @@ print(directions_url)
 #gui
 root = tk.Tk()
 
+#request data from url -> crawls for the first image and stores it
 raw_data = urllib.request.urlopen(directions_url).read()
-#print(raw_data)
 im = PIL.Image.open(io.BytesIO(raw_data))
 image = PIL.ImageTk.PhotoImage(im)
-label1 = Label(root, image=image)
-label1.grid()
+
+#displays the img
+labelMap = Label(root, image=image)
+labelMap.grid()
+
+labelTimeToDestination = Label(root, text = directions_result[0]["legs"][0]["duration_in_traffic"]["text"] + " - " + directions_result[0]["legs"][0]["distance"]["text"])
+labelTimeToDestination.grid()
+#print(directions_result[0]["legs"][0]["duration"]["text"])
+#get optimistic and pessimistic and change color red to green by comparison
+
+
+
+
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 root.mainloop()
