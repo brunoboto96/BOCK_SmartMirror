@@ -20,3 +20,4 @@ label1.grid()
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 root.mainloop()
+ 
