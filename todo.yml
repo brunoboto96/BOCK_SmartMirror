@@ -3,3 +3,12 @@ left and right swipe and punch in to select
 
 maps:
 choose mode (input) – Specifies the mode of transport to use when calculating directions. One of “driving”, “walking”, “bicycling” or “transit”
+get "optimistic" and "pessimistic" traffic_model and change color red to green by comparison to "best_guess"
+integrate with main .py
+
+initial config:
+setup google account as a first time boot screen
+
+initialise:
+run script.py at boot
+disable boot screen
